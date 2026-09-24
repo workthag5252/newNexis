@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  # MySQL 8.4 Database
+  db:
+    image: mysql:8.4
+    container_name: nexus_mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root_password}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-nexus_ai_db}
+      MYSQL_USER: ${MYSQL_USER:-nexus_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-nexus_password}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-root_password}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nexus_backend
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-nexus_user}:${MYSQL_PASSWORD:-nexus_password}@db:3306/${MYSQL_DATABASE:-nexus_ai_db}
+      JWT_SECRET: ${JWT_SECRET:-nexus-super-secret-jwt-key-2026-production-ready}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
+      JWT_ACCESS_TOKEN_EXPIRE_MINUTES: ${JWT_ACCESS_TOKEN_EXPIRE_MINUTES:-1440}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      GOOGLE_SHEET_ID: ${GOOGLE_SHEET_ID:-}
+    volumes:
+      - ./backend:/app
+
+  # Frontend (Vite / Next.js)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: nexus_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      VITE_API_URL: http://localhost:8000
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:

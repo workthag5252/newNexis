@@ -1,0 +1,63 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@nexus.ai",
+      "passwordHash": "$2b$10$AYR6EuEbwmGybWTZw3LUqOMi0y/QIluY4jiBLZtOol04qEZUIdj3O",
+      "fullName": "Admin Nexus",
+      "role": "admin",
+      "isActive": true,
+      "createdAt": "2026-09-24T04:52:09.420Z",
+      "updatedAt": "2026-09-24T04:52:09.420Z"
+    },
+    {
+      "id": 2,
+      "email": "testuser@nexus.ai",
+      "passwordHash": "$2b$10$L4xRpAWKoYPTgxpbsapG6.G6kC2LuVlYx5iL0QOAjXaV8/Da7bWx6",
+      "fullName": "Test Developer",
+      "role": "user",
+      "isActive": true,
+      "createdAt": "2026-09-24T04:52:15.137Z",
+      "updatedAt": "2026-09-24T04:52:15.137Z"
+    }
+  ],
+  "aiHistory": [
+    {
+      "id": 2,
+      "userId": 2,
+      "userEmail": "testuser@nexus.ai",
+      "prompt": "Give 3 key advantages of SQLAlchemy 2.0.",
+      "response": "[Simulated GPT Engine - gpt-4o-mini]\n\nPrompt: \"Give 3 key advantages of SQLAlchemy 2.0.\"\n\nTo connect live OpenAI services, provide your OPENAI_API_KEY in .env.",
+      "modelUsed": "gpt-4o-mini",
+      "tokensUsed": 60,
+      "createdAt": "2026-09-24T04:52:21.802Z"
+    },
+    {
+      "id": 1,
+      "userId": 1,
+      "userEmail": "admin@nexus.ai",
+      "prompt": "Explain the benefits of JWT tokens and MySQL database in production systems.",
+      "response": "JWT tokens provide stateless authentication eliminating server session bottlenecks. MySQL 8.4 delivers ACID compliance, relational integrity, and rock-solid indexing for mission-critical enterprise data.",
+      "modelUsed": "gpt-4o-mini",
+      "tokensUsed": 84,
+      "createdAt": "2026-09-24T03:52:09.421Z"
+    }
+  ],
+  "sheetLogs": [
+    {
+      "id": 1,
+      "userId": 2,
+      "userEmail": "testuser@nexus.ai",
+      "sheetId": "1DemoNexusAI-SheetId-Sync",
+      "sheetUrl": "https://docs.google.com/spreadsheets/d/1DemoNexusAI-SheetId-Sync",
+      "recordsCount": 4,
+      "status": "success",
+      "syncedAt": "2026-09-24T04:52:24.829Z"
+    }
+  ],
+  "counter": {
+    "users": 2,
+    "ai": 2,
+    "sync": 1
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "NexusAI Platform - Auth, GPT API & Google Sheets",
+  "description": "Full-stack web application with JWT authentication, OpenAI GPT AI backend integration, MySQL database architecture, and Google Sheets sync.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
